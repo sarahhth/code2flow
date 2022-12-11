@@ -1,0 +1,114 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void enkripsi();
+void dekripsi();
+void receiver(int p, int code, int opkey)
+{
+  int operasi;
+  operasi = (p*opkey) + code;
+  printf("%c",operasi);
+}
+int main ()
+{
+    int pil ;
+    printf("***** Cryptography *****\n");
+    while(1)
+    {
+        printf("menu :\n1. Enkripsi\n2. Dekripsi\n3. Exit\n\n");
+        printf("input pilihan :");
+        scanf("%d",&pil);
+        fflush (stdin);
+        if (pil==1)
+        {
+            enkripsi();
+        }
+        else if (pil==2)
+        {
+            dekripsi();
+        }
+        else if (pil==3)
+        {
+        	exit(0);
+        }
+        else
+        {
+            printf("maaf, pilihan anda tidak tersedia!\n"); 
+        }
+    }
+}
+
+void enkripsi()
+{
+ int key, i;
+
+ char str[1000];
+ printf("Masukkan Teks\n");
+ gets(str); 
+ printf("Masukkan Operator Kunci\n");
+ scanf("%d",&key);
+ i=0;
+ printf("Chpertext\n");
+  while(str[i]!='\0')
+  {  
+    printf("%d ",str[i] / key);
+     i++;  
+  }
+  printf("\nKunci\n");
+  i=0;
+  while(str[i]!='\0')
+  {  
+    printf("%d ",str[i] % key);
+    i++;
+  }
+  printf("%d",key);
+  printf("\n");
+}
+
+void dekripsi()
+{
+  int word[255];
+    char teks[255];
+    char *sementara;
+    int i=0;
+
+    printf("Masukkan Chipertext:");
+    scanf("%[^\n]s",teks);
+
+    sementara = strtok(teks," ");
+    word[i] = atoi(sementara);
+    i++;
+
+    sementara = strtok(NULL," ");
+
+    while(sementara != NULL){
+        word[i] = atoi(sementara);
+        i++;
+        sementara = strtok(NULL," ");
+    }
+
+    int key[i];
+    int opkey,y,j;
+
+
+    printf("Masukkan Kunci :");
+    for ( y = 0; y < i; y++) {
+        scanf("%d", &key[y]);
+    }
+    printf("Masukkan Operator kunci : "); 
+    scanf("%d", &opkey);
+    printf("\n\n");
+    for (j = 0; j < i; j++)
+    {
+        receiver(word[j],key[j],opkey);
+    }
+    printf("\n\n");
+
+    return 0;
+}
+
+
+
+
+
